@@ -364,44 +364,4 @@ class StepCounter : AppCompatActivity() {
             }
         }
     }
-
-    private fun connect(ID: String, STEP: String) {
-
-        //이 부분 없으면 오류 이유 파익 x
-        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-
-        val jdbcURL = "jdbc:postgresql://192.168.0.4:5432/server" //서버 주소
-        val username = "postgres" // 유저 이름
-        val password = "150526" // 비번
-
-        try {
-            val connection = DriverManager.getConnection(jdbcURL, username, password) //연결한다,
-            println("Connected to PostgreSQL server")
-
-            /** 입력 */
-            // 쿼리에 입력한다.
-            var sql = "UPDATE data SET 걸음 = '$STEP' WHERE 아이디='$ID'"
-
-            val statement: PreparedStatement = connection.prepareStatement(sql)
-
-            // 이 값을 테이블에 넣음
-            //statement.setString(1, "$STEP")
-
-            val rows = statement.executeUpdate()
-
-            if (rows > 0) {
-                println("A new contact has been inserted.")
-                intent.putExtra("ID", ID)
-                Toast.makeText(this, "저장을 완료했습니다.", Toast.LENGTH_SHORT).show()
-                println("불러온 걸음 수 : $STEP")
-            }
-            connection.close()
-
-        } catch (e: SQLException) {
-            println("데이터 저장 실패")
-            e.printStackTrace()
-            Toast.makeText(this, "저장을 실패했습니다.", Toast.LENGTH_SHORT).show()
-        }
-    }
 }
