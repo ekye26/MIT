@@ -10,7 +10,6 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
@@ -32,7 +31,6 @@ import java.time.ZoneId
 import java.util.concurrent.TimeUnit
 
 const val tag = "Heart Rate"
-
 
 class HeartRate : AppCompatActivity() {
 
@@ -155,27 +153,23 @@ class HeartRate : AppCompatActivity() {
         .toLocalDateTime().toString()
 
 
-
     private fun readData() {
 
         val endTime = LocalDateTime.now().atZone(ZoneId.systemDefault())
         val startTime = endTime.minusWeeks(1)
         Log.i(tag, "Range Start: $startTime")
         Log.i(tag, "Range End: $endTime")
-        val data_list = mutableListOf<Int>()
 
-        //오늘 걸음 수
+        //오늘 심박 수
         Fitness.getHistoryClient(this, getGoogleAccount())
             .readDailyTotal(DataType.TYPE_HEART_RATE_BPM)
             .addOnSuccessListener { dataSet ->
-                var total = when {
+                val total = when {
                     dataSet.isEmpty -> 0
                     else -> dataSet.dataPoints.first().getValue(Field.FIELD_RPM).asInt()
                 }
-                Log.i(tag, "Total Heart Rate: $total")
+                Log.i(tag, "Today Heart Rate: $total")
 
-                val text : TextView = findViewById(R.id.textView9)
-                text.setText("심박수  : $total")
 
         val readRequest = DataReadRequest.Builder()
                 .aggregate(DataType.TYPE_HEART_RATE_BPM)
@@ -188,16 +182,12 @@ class HeartRate : AppCompatActivity() {
             .addOnSuccessListener { response ->
                 for (dataSet in response.buckets.flatMap { it.dataSets }) {
                     dumpDataSet(dataSet)
-
                     val hit_total = when {
                         dataSet.isEmpty -> 0
                         else -> dataSet.dataPoints.first().getValue(Field.FIELD_RPM).asInt()
                     }
                     Log.i(TAG, "과거 심박 수 : $hit_total")
-                    data_list.add(hit_total)
                 }
-                println(data_list)
-
                 }.addOnFailureListener { e ->Log.w(TAG,"There was an error reading data from Google Fit", e) }
             }.addOnFailureListener { e -> Log.w(tag, "There was a problem getting the step count.", e) }
     }
@@ -222,21 +212,13 @@ class HeartRate : AppCompatActivity() {
 
     private fun permissionApproved(): Boolean {
         return if (runningQOrLater) {
-            PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(
-                this,
-                Manifest.permission.BODY_SENSORS
-            )
-        } else {
-            true
-        }
+            PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, Manifest.permission.BODY_SENSORS) }
+        else { true }
     }
 
     private fun requestRuntimePermissions(requestCode: FitActionRequestCode) {
         val shouldProvideRationale =
-            ActivityCompat.shouldShowRequestPermissionRationale(
-                this,
-                Manifest.permission.BODY_SENSORS
-            )
+            ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.BODY_SENSORS)
         requestCode.let {
             if (shouldProvideRationale) {
                 Log.i(tag, "Displaying permission rationale to provide additional context.")
@@ -244,9 +226,7 @@ class HeartRate : AppCompatActivity() {
                     findViewById(R.id.main_activity_view),
                     R.string.permission_rationale,
                     Snackbar.LENGTH_INDEFINITE
-                )
-                    .setAction(R.string.ok) {
-                        // Request permission
+                ).setAction(R.string.ok) {
                         ActivityCompat.requestPermissions(
                             this,
                             arrayOf(Manifest.permission.BODY_SENSORS),

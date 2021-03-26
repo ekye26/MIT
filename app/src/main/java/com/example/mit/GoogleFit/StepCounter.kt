@@ -77,9 +77,7 @@ class StepCounter : AppCompatActivity() {
 //        }
     }
 
-    override fun onResume() {
-        super.onResume()
-    }
+
 
     private fun checkPermissionsAndRun(fitActionRequestCode: FitActionRequestCode) {
         if (permissionApproved()) {

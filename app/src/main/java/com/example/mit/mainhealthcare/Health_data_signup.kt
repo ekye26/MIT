@@ -5,8 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.StrictMode
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -18,13 +16,13 @@ import java.sql.PreparedStatement
 import java.sql.SQLException
 
 
-const val TAG = "DATA"
+class Health_data_signup : AppCompatActivity() {
 
-class Health_data : AppCompatActivity() {
+    val TAG = "DATA"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.health_data)
+        setContentView(R.layout.health_data_signup)
 
         val button: Button = findViewById(R.id.button)
         val T_birth : TextView = findViewById(R.id.BIRTH_data)
@@ -35,7 +33,6 @@ class Health_data : AppCompatActivity() {
         if(intent.hasExtra("ID")) { T_id.setText(intent.getStringExtra("ID")) }
         if(intent.hasExtra("NAME")) {T_name.setText(intent.getStringExtra("NAME")) }
         if(intent.hasExtra("BIRTH")) { T_birth.setText(intent.getStringExtra("BIRTH")) }
-
         if (intent.hasExtra("GENDER")) { T_gender.setText(intent.getStringExtra("GENDER")) }
 
         button.setOnClickListener {
@@ -53,21 +50,6 @@ class Health_data : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.main2, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val id = item.itemId
-
-        if (id == R.id.action_logout) {
-            val logout_intent = Intent(this, Health_main::class.java)
-            Toast.makeText(this, "로그아웃을 누르셨습니다.", Toast.LENGTH_SHORT)
-            startActivity(logout_intent)
-        }
-        return super.onOptionsItemSelected(item)
-    }
 
     private fun connect(ID: String, HEIGHT: String, WEIGHT: String) {
 
@@ -101,10 +83,11 @@ class Health_data : AppCompatActivity() {
             
             if (rows > 0) {
                 println("A new contact has been inserted.")
-                //val intent = Intent(this, StepCounter::class.java)
+                val intent = Intent(this, Health_scroll::class.java)
                 intent.putExtra("ID", ID)
                 Toast.makeText(this, "저장이 완료되었습니다.", Toast.LENGTH_SHORT).show()
-                //startActivity(intent)
+                startActivity(intent)
+                finish()
             }
             connection.close()
 

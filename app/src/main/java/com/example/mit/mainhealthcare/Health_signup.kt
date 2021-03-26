@@ -89,13 +89,14 @@ class Health_signUp : AppCompatActivity() {
 
             val rows = statement.executeUpdate()
 
-
             if (rows > 0) {
                 println("A new contact has been inserted.")
-                val intent = Intent(this, Health_data::class.java)
+                val intent = Intent(this, Health_data_signup::class.java)
                 intent.putExtra("ID", ID)
-                intent.putExtra("이름", NAME)
-                intent.putExtra("생년월일", BIRTH)
+                intent.putExtra("NAME", NAME)
+                intent.putExtra("BIRTH", BIRTH)
+                intent.putExtra("GENDER",GENDER)
+                print("=======$ID,$NAME,$BIRTH,$GENDER ==============")
 
                 Toast.makeText(this, " 회원가입 완료입니다.", Toast.LENGTH_SHORT).show()
                 startActivity(intent)
@@ -133,7 +134,7 @@ class Health_signUp : AppCompatActivity() {
                 val output = result.getBoolean("success")
 
                 if (output == true) {
-                    Toast.makeText(this, "아이디가 중복됩니다.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "아이디 사용이 불가능합니다.", Toast.LENGTH_SHORT).show()
                 } else {
                     Toast.makeText(this, "아이디 사용이 가능합니다.", Toast.LENGTH_SHORT).show()
                 }

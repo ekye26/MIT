@@ -7,6 +7,8 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.BODY_SENSORS" />
 
     <application
         android:allowBackup="true"
@@ -15,20 +17,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".GoogleFit.HeartRate"></activity>
+
         <activity android:name=".MainActivity" />
+
         <activity android:name=".mainhealthcare.Health_main">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity android:name=".mainhealthcare.Health_login" />
         <activity android:name=".mainhealthcare.Health_signUp" />
-        <activity android:name=".mainhealthcare.Health_data" />
+        <activity android:name=".mainhealthcare.Health_data_scroll" />
+        <activity android:name=".mainhealthcare.Health_data_signup" />
         <activity android:name=".GoogleFit.StepCounter" />
         <activity android:name=".mainhealthcare.Health_scroll" />
+        <activity android:name=".GoogleFit.HeartRate"></activity>
+
     </application>
 
 </manifest>

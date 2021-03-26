@@ -87,7 +87,6 @@ class Health_login : AppCompatActivity() {
                             val intent = Intent(this, Health_scroll::class.java)
                             Toast.makeText(this, " 로그인 완료입니다.", Toast.LENGTH_SHORT).show()
 
-
                             intent.putExtra("GENDER", gender)
                             intent.putExtra("ID", ID)
                             intent.putExtra("BIRTH", birth)

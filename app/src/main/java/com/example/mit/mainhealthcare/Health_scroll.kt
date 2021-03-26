@@ -59,7 +59,6 @@ class Health_scroll : AppCompatActivity() {
 
 
 
-
     private fun login(ID : String) {
 
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
@@ -100,7 +99,7 @@ class Health_scroll : AppCompatActivity() {
 
                         if (birth != null) {
 
-                            val intent = Intent(this, Health_data::class.java)
+                            val intent = Intent(this, Health_data_scroll::class.java)
 
                             intent.putExtra("GENDER", gender)
                             intent.putExtra("ID", ID)
