@@ -64,9 +64,9 @@ class Health_scroll : AppCompatActivity() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
 
-        val jdbcURL = "jdbc:postgresql://192.168.0.4:5432/server"
+        val jdbcURL = "jdbc:postgresql://:5432/server"
         val username = "postgres"
-        val password = "150526"
+        val password = ""
 
         try {
             val connection = DriverManager.getConnection(jdbcURL, username, password)
